@@ -81,7 +81,9 @@ void push(stack_t **stack, unsigned int line_number, int strint)
 	new->n = strint;
 	new->prev = NULL;
 	new->next = *stack;
-	(*stack)->prev = new;
+	if (*stack)
+		(*stack)->prev = new
+
 	*stack = new;
 }
 
