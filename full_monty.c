@@ -92,7 +92,7 @@ void find_function(stack_t **stack, char *opcode, unsigned int line_number, int 
 
 	for (i = 0; functions[i].opcode != NULL; i++)
 	{
-		if (functions[i].opcode == opcode)
+		if (strcmp(functions[i].opcode,opcode) == 0)
 		{
 			functions[i].f(stack, line_number, strint);
 			return;
