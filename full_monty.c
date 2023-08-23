@@ -19,32 +19,35 @@ int main(int argc, char *argv[])
 	while (fgets(buffer, sizeof(buffer), file))
 	{
 		char *opcode = strtok(buffer, " \t\n");
+
 		if (opcode && opcode[0] != '#')
 		{
 			if (strcmp(opcode, "push") == 0)
 			{
 				char *string = strtok(NULL, " \t\n");
+
 				if (string && int_check(string))
 				{
 					int strint = atoi(string);
-					find_function(&stack, opcode, line_number, strint);
+
+					fnd(&stack, opcode, line_number, strint);
 				}
 				else
 				{
-					fprintf(stderr,"L%d: usage: push integer\n", line_number);
+					fprintf(stderr, "L%d: usage: push integer\n", line_number);
 					free_stack(stack);
 					fclose(file);
-					return EXIT_FAILURE;
+					return (EXIT_FAILURE);
 				}
 			}
 			else
-				find_function(&stack, opcode, line_number, 0);
+				fnd(&stack, opcode, line_number, 0);
 		}
 		line_number++;
 	}
 	free_stack(stack);
 	fclose(file);
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }
 
 /**
@@ -54,7 +57,7 @@ int main(int argc, char *argv[])
  * @argv: array of arguments
  */
 
-void quick_check(int argc,char *argv, FILE *file)
+void quick_check(int argc, char *argv, FILE *file)
 {
 	if (argc != 2)
 	{
@@ -69,14 +72,14 @@ void quick_check(int argc,char *argv, FILE *file)
 	}
 }
 /**
- * find_function -  Finds the matching function
+ * fnd -  Finds the matching function
  * @stack: stack functions are applied to
  * @opcode: Operation to search for
  * @line_number: line of file instruction is on
  * @strint: integer value of string
  */
 
-void find_function(stack_t **stack, char *opcode, unsigned int line_number, int strint)
+void fnd(stack_t **stack, char *opcode, unsigned int line_number, int strint)
 {
 	int i;
 	instruction_t functions[] = {
@@ -92,7 +95,7 @@ void find_function(stack_t **stack, char *opcode, unsigned int line_number, int 
 
 	for (i = 0; functions[i].opcode != NULL; i++)
 	{
-		if (strcmp(functions[i].opcode,opcode) == 0)
+		if (strcmp(functions[i].opcode, opcode) == 0)
 		{
 			functions[i].f(stack, line_number, strint);
 			return;

@@ -38,7 +38,7 @@ typedef struct instruction_s
 /*Prototypes*/
 int main(int argc, char *argv[]);
 void quick_check(int argc,char *argv, FILE *file);
-void find_function(stack_t **stack, char *opcode, unsigned int line_number, int strint);
+void fnd(stack_t **stack, char *opcode, unsigned int line_number, int strint);
 void free_stack(stack_t *stack);
 int int_check(const char *string);
 void nop(stack_t **stack, unsigned int line_number, int strint);
